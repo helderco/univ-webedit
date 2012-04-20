@@ -15,4 +15,8 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class SiriuxUserBundle extends Bundle
 {
+    public function getParent()
+    {
+        return 'FOSUserBundle';
+    }
 }
