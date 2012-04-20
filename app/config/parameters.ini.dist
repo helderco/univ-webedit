@@ -9,7 +9,6 @@
     database_user     = root
     database_password = root
 
-    system_name       = Webedit
     system_email      = webedit@siriux.org
 
     mailer_transport  = smtp

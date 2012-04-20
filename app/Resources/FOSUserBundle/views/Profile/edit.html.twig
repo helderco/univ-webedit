@@ -1,0 +1,12 @@
+{% extends 'FOSUserBundle::layout.html.twig' %}
+
+{% block title %}{{ 'layout.profile'|trans }}{% endblock %}
+
+{% form_theme form theme %}
+
+{% block fos_user_content %}
+<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
+    {{ form_widget(form) }}
+    <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+</form>
+{% endblock fos_user_content %}

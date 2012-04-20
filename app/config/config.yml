@@ -2,9 +2,13 @@ imports:
     - { resource: parameters.ini }
     - { resource: security.yml }
 
+parameters:
+    system_name: "Siriux Webedit"
+    form_theme: "::form.html.twig"
+
 framework:
     #esi:             ~
-    #translator:      { fallback: %locale% }
+    translator:      { fallback: %locale% }
     secret:          %secret%
     charset:         UTF-8
     router:          { resource: "%kernel.root_dir%/config/routing.yml" }
@@ -50,11 +54,36 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: %mailer_transport%
-    host:      %mailer_host%
-    username:  %mailer_user%
-    password:  %mailer_password%
+    transport:  %mailer_transport%
+    encryption: %mailer_encryption%
+    auth_mode:  %mailer_auth_mode%
+    host:       %mailer_host%
+    username:   %mailer_user%
+    password:   %mailer_password%
 
 jms_security_extra:
     secure_controllers:  true
     secure_all_services: false
+
+# FOS USer Configuration
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Siriux\UserBundle\Entity\User
+    use_listener: false
+    service:
+      user_manager: siriux_user.user_manager
+    template:
+      theme: %form_theme%
+    from_email:
+        address: %system_email%
+        sender_name: %system_name%
+    registration:
+        form:
+            type: siriux_user_registration
+        confirmation:
+            enabled: true
+    profile:
+        form:
+            type: siriux_user_profile
+
