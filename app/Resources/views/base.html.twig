@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %} | Webedit</title>
+        <title>{% block title %}Welcome!{% endblock %} | {{ app_name }}</title>
         {% block stylesheets %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </head>
@@ -10,7 +10,7 @@
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <h2>Hey, {{ app.user.username }}!</h2>
         {% else %}
-            <h2>Welcome to Webedit.</h2>
+            <h2>Welcome to {{ app_name }}.</h2>
         {% endif %}
 
         <ul>
