@@ -21,6 +21,10 @@ SiriuxUserBundle:
     resource: "@SiriuxUserBundle/Controller/"
     type: annotation
 
+SiriuxAdminBundle:
+    resource: "@SiriuxAdminBundle/Controller/"
+    type: annotation
+
 SiriuxWebeditBundle:
     resource: "@SiriuxWebeditBundle/Controller/"
     type: annotation

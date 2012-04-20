@@ -3,7 +3,7 @@ imports:
     - { resource: security.yml }
 
 parameters:
-    system_name: "Siriux Webedit"
+    app_name: "Webedit"
     form_theme: "::form.html.twig"
 
 framework:
@@ -24,6 +24,9 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    globals:
+        app_name: %app_name%
+        system_email: %system_email%
 
 # Assetic Configuration
 assetic:
@@ -77,7 +80,7 @@ fos_user:
       theme: %form_theme%
     from_email:
         address: %system_email%
-        sender_name: %system_name%
+        sender_name: %app_name%
     registration:
         form:
             type: siriux_user_registration
