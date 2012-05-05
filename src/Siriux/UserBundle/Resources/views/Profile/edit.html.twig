@@ -1,12 +1,24 @@
-{% extends 'FOSUserBundle::layout.html.twig' %}
+{% extends 'SiriuxUserBundle::__section.html.twig' %}
 
-{% block title %}{{ 'layout.profile'|trans }}{% endblock %}
+{% block subtitle %}{{ 'layout.profile'|trans }}{% endblock %}
 
-{% form_theme form theme %}
-
-{% block fos_user_content %}
-<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
-    {{ form_widget(form) }}
-    <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
-</form>
-{% endblock fos_user_content %}
+{% block body %}
+<article class="module width_full">
+    <form id="user_update_form" action="{{ path('fos_user_profile_edit') }}" method="post">
+        <header><h3>{{ block('title') }}</h3></header>
+        <div class="module_content">
+            {{ form_errors(form) }}
+            {{ form_row(form.user.name) }}
+            {{ form_row(form.user.username) }}
+            {{ form_row(form.user.email) }}
+            {{ form_rest(form) }}
+        </div>
+        <footer>
+            <div class="submit_link">
+                <input type="submit" value="{{ 'profile.edit.submit'|trans }}" class="alt_btn" />
+                or <a href="{{ path('root') }}">Cancel</a>
+            </div>
+        </footer>
+    </form>
+</article>
+{% endblock %}

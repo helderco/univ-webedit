@@ -27,7 +27,7 @@ security:
         - { path: ^/login$,     role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register,   role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting,  role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/home,       role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/home,       role: ROLE_USER }
         - { path: ^/admin,      role: ROLE_ADMIN }
 
         #- { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

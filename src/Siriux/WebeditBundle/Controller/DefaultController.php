@@ -23,7 +23,13 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        $security = $this->get('security.context');
+
+        if ($security->isGranted('ROLE_ADMIN')) {
+            return $this->redirect($this->generateUrl('admin_root'));
+        }
+
+        if ($security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl("home"));
         }
 

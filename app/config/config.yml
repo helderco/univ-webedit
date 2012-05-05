@@ -27,6 +27,9 @@ twig:
     globals:
         app_name: %app_name%
         system_email: %system_email%
+    form:
+        resources:
+            - '::fields.html.twig'
 
 # Assetic Configuration
 assetic:

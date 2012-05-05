@@ -865,7 +865,8 @@ padding: 10px 0;
 text-indent: 40px;
 font-size: 14px;}
 
-#main h4.alert_error {
+#main h4.alert_error,
+#main h4.alert_fos_user_error {
 display: block;
 width: 95%;
 margin: 20px 3% 0 3%;
@@ -881,7 +882,8 @@ padding: 10px 0;
 text-indent: 40px;
 font-size: 14px;}
 
-#main h4.alert_success {
+#main h4.alert_success,
+#main h4.alert_fos_user_success {
 display: block;
 width: 95%;
 margin: 20px 3% 0 3%;

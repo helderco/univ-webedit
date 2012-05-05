@@ -1,11 +1,11 @@
-{% extends '::admin.html.twig' %}
+{% extends is_granted('ROLE_ADMIN') ? '::admin.html.twig' : '::user.html.twig' %}
 
-{% block section %}Users{% endblock %}
+{% block section %}Account{% endblock %}
 
 {% block title %}{{ block('section') }}: {{ block('subtitle') }}{% endblock %}
 
 {% block breadcrumb %}
-    <a href="{{ path('users') }}">{{ block('section') }}</a>
+    <a href="{{ path('root') }}">{{ block('section') }}</a>
     <div class="breadcrumb_divider"></div>
     <a class="current">{{ block('subtitle') }}</a>
 {% endblock %}

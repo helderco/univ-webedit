@@ -19,7 +19,6 @@ class AppKernel extends Kernel
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Siriux\UserBundle\SiriuxUserBundle(),
-            new Siriux\AdminBundle\SiriuxAdminBundle(),
             new Siriux\WebeditBundle\SiriuxWebeditBundle(),
         );
 

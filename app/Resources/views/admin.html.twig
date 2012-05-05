@@ -1,0 +1,16 @@
+{% extends '::layout.html.twig' %}
+
+{% block app_title %}{{ app_name }} Admin{% endblock %}
+
+{% block sidebar %}
+    <form class="quick_search">
+            <input type="text" value="Quick Search" onfocus="if(!this._haschanged){this.value=''};this._haschanged=true;">
+    </form>
+    <hr/>
+
+    <h3>Users</h3>
+    <ul class="toggle">
+        <li class="icn_add_user"><a href="{{ path("users_new") }}">Add New User</a></li>
+        <li class="icn_view_users"><a href="{{ path("users") }}">View Users</a></li>
+    </ul>
+{% endblock sidebar %}

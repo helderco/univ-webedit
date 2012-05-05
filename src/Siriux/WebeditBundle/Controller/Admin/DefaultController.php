@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Siriux\AdminBundle\Controller;
+namespace Siriux\WebeditBundle\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -35,14 +35,5 @@ class DefaultController extends Controller
     public function dashboardAction()
     {
         return array();
-    }
-
-    /**
-     * @Route("/profile", name="admin_user_profile")
-     */
-    public function profileAction()
-    {
-        $user = $this->get('security.context')->getToken()->getUser();
-        return $this->forward('SiriuxUserBundle:Admin:edit', array('id' => $user->getId(), 'profile' => true));
     }
 }

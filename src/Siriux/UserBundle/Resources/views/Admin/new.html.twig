@@ -1,8 +1,6 @@
 {% extends 'SiriuxUserBundle:Admin:__section.html.twig' %}
 
-{% form_theme form 'SiriuxAdminBundle:Form:fields.html.twig' %}
-
-{% block subtitle %} New {% endblock %}
+{% block subtitle %}New{% endblock %}
 
 {% block body %}
 <form id="user_update_form" action="{{ path('users_create') }}" method="post">

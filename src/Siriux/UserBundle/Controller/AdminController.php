@@ -109,21 +109,20 @@ class AdminController extends Controller
      * @Route("/{id}/edit", name="users_edit")
      * @Template()
      */
-    public function editAction($id, $profile = false)
+    public function editAction($id)
     {
         $user = $this->getUser($id);
-        $currentUser = $this->isCurrentUser($user);
+        $isCurrentUser = $this->isCurrentUser($user);
 
-        if ($currentUser && !$profile) {
-            return $this->redirect($this->generateUrl('admin_user_profile'));
+        if ($isCurrentUser) {
+            return $this->redirect($this->generateUrl('fos_user_profile_edit'));
         }
 
-        $editForm = $this->createForm(new UserType('AdminEdit', $currentUser), $user);
+        $editForm = $this->createForm(new UserType('AdminEdit', $isCurrentUser), $user);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'user'          => $user,
-            'current_user'  => $currentUser,
             'edit_form'     => $editForm->createView(),
             'delete_form'   => $deleteForm->createView(),
         );
@@ -139,9 +138,9 @@ class AdminController extends Controller
     public function updateAction($id)
     {
         $user = $this->getUser($id);
-        $currentUser = $this->isCurrentUser($user);
+        $isCurrentUser = $this->isCurrentUser($user);
 
-        $editForm = $this->createForm(new UserType('AdminEdit', $currentUser), $user);
+        $editForm = $this->createForm(new UserType('AdminEdit', $isCurrentUser), $user);
         $editForm->bindRequest($this->getRequest());
 
         if ($editForm->isValid()) {
@@ -155,7 +154,6 @@ class AdminController extends Controller
 
         return array(
             'user'          => $user,
-            'current_user'  => $currentUser,
             'edit_form'     => $editForm->createView(),
             'delete_form'   => $deleteForm->createView(),
         );
