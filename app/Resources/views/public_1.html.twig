@@ -19,6 +19,9 @@
         {% for key, message in app.session.getFlashes %}
             <div class="alert alert_{{key}}">{{ message|trans }}</div>
         {% endfor %}
+            <!-- div class="info info_}}key}}"
+            adicionar no css info_error   
+            -->
 
         {% block body %}
             <h3>{% block fos_user_header %}{% endblock %}</h3>
