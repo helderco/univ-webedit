@@ -1,0 +1,17 @@
+{% extends 'FOSUserBundle::layout.html.twig' %}
+
+{% block title %}{{ 'layout.contact'|trans }}{% endblock %}
+
+{% form_theme form theme %}
+
+{% block fos_user_content %}
+<form id="form2">
+    <label><span class="text-form">Name:</span><input type="text"></label>
+    <label><span class="text-form">E-mail:</span><input type="text"></label>
+    <label><span class="text-form">Phone:</span><input type="text"></label>
+    <div class="text-form">Message:</div><textarea></textarea></label>
+    <a class="btn">Send</a>
+</form>
+<br/>
+<br/>
+{% endblock fos_user_content %}
