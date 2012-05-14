@@ -1,0 +1,14 @@
+{% extends '::user.html.twig' %}
+
+{% block body %}
+<h1>New Page</h1>
+<form>
+Page name:<input type="text" name="page_name"><br/>    
+Choose template:
+<input type="radio" name="template" value="t1" /> Template 1
+<input type="radio" name="template" value="t2" /> Template 2
+<input type="radio" name="template" value="t2" /> Template 3
+ 
+<input type="submit" name="create">
+</form>
+{% endblock %}

@@ -26,11 +26,12 @@
 </head>
 <body>
 <!-- Panel Begin -->
-<div id="advanced"><span class="trigger"><strong></strong><em></em></span><div class="bg_pro"><div class="pro_main"><a href="#" class="pro_logo"></a><ul class="pro_menu"><li><a href="{{ path('root') }}"><img src="{{ asset('/public/images/pro_home.png')}}" alt=""></a></li><li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans }}</a></li><li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans }}</a></li><li><a href="{{ path('fos_user_resetting_request') }}">{{ 'layout.reset'|trans }}</a></li><li><a href="#">contactos</a></li></li></ul><div class="clear"></div></div></div><div class="bg_pro2"></div></div>
+<div id="advanced"><span class="trigger"><strong></strong><em></em></span><div class="bg_pro"><div class="pro_main"><a href="#" class="pro_logo"></a><ul class="pro_menu"><li><a href="{{ path('root') }}"><img src="{{ asset('/public/images/pro_home.png')}}" alt=""></a></li><li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans }}</a></li><li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans }}</a></li><li><a href="{{ path('fos_user_resetting_request') }}">{{ 'layout.reset'|trans }}</a></li><li><a href="{{path('contact')}}">contactos</a></li></li></ul><div class="clear"></div></div></div><div class="bg_pro2"></div></div>
 <!--  Panel End -->
 <div class="bg-main">
 	<header>
-            <h2>Welcome to {{ app_name }}.</h2>
+            
+            
             
         {% for key, message in app.session.getFlashes %}
             <div class="info info_{{key}}">{{ message|trans }}</div>

@@ -44,4 +44,24 @@ class DefaultController extends Controller
     {
         return array();
     }
+    
+    /**
+     * @Route("/contact", name="contact")
+     * @Template
+     */
+    public function contactAction()
+    {
+        
+        
+        return array();
+    }
+    
+    /**
+     * @Route("/contact/submit", name="feedback")
+     * @Template
+     */
+    public function feedbackAction()
+    {
+        return array();
+    }
 }
