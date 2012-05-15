@@ -4,13 +4,12 @@ namespace Siriux\WebeditBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="menus")
+ * @ORM\Table(name="templates")
  */
-class Menu
+class Template
 {
     /**
      * @ORM\Id
@@ -22,22 +21,12 @@ class Menu
     /**
      * @ORM\Column(type="string", length=45)
      */
-    private $title;
-
-    /**
-     * @ORM\OneToMany(targetEntity="MenuItem", mappedBy="menu")
-     */
-    private $items;
+    private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Siriux\UserBundle\Entity\User")
      */
     private $user;
-
-    public function __construct()
-    {
-        $this->items = new ArrayCollection();
-    }
 
     /**
      * Get id
@@ -50,43 +39,23 @@ class Menu
     }
 
     /**
-     * Set title
+     * Set name
      *
-     * @param string $title
+     * @param string $name
      */
-    public function setTitle($title)
+    public function setName($name)
     {
-        $this->title = $title;
+        $this->name = $name;
     }
 
     /**
-     * Get title
+     * Get name
      *
      * @return string 
      */
-    public function getTitle()
+    public function getName()
     {
-        return $this->title;
-    }
-
-    /**
-     * Add items
-     *
-     * @param Siriux\WebeditBundle\Entity\MenuItem $items
-     */
-    public function addMenuItem(\Siriux\WebeditBundle\Entity\MenuItem $items)
-    {
-        $this->items[] = $items;
-    }
-
-    /**
-     * Get items
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getItems()
-    {
-        return $this->items;
+        return $this->name;
     }
 
     /**

@@ -8,9 +8,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="menus")
+ * @ORM\Table(name="pages")
  */
-class Menu
+class Page
 {
     /**
      * @ORM\Id
@@ -25,9 +25,15 @@ class Menu
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity="MenuItem", mappedBy="menu")
+     * @ORM\ManyToOne(targetEntity="Template")
      */
-    private $items;
+    private $template;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Block", mappedBy="page")
+     */
+    private $blocks;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="\Siriux\UserBundle\Entity\User")
@@ -36,8 +42,9 @@ class Menu
 
     public function __construct()
     {
-        $this->items = new ArrayCollection();
+        $this->blocks = new ArrayCollection();
     }
+
 
     /**
      * Get id
@@ -70,23 +77,23 @@ class Menu
     }
 
     /**
-     * Add items
+     * Set template
      *
-     * @param Siriux\WebeditBundle\Entity\MenuItem $items
+     * @param Siriux\WebeditBundle\Entity\Template $template
      */
-    public function addMenuItem(\Siriux\WebeditBundle\Entity\MenuItem $items)
+    public function setTemplate(\Siriux\WebeditBundle\Entity\Template $template)
     {
-        $this->items[] = $items;
+        $this->template = $template;
     }
 
     /**
-     * Get items
+     * Get template
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Siriux\WebeditBundle\Entity\Template 
      */
-    public function getItems()
+    public function getTemplate()
     {
-        return $this->items;
+        return $this->template;
     }
 
     /**
@@ -107,5 +114,25 @@ class Menu
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Add blocks
+     *
+     * @param Siriux\WebeditBundle\Entity\Block $blocks
+     */
+    public function addBlock(\Siriux\WebeditBundle\Entity\Block $blocks)
+    {
+        $this->blocks[] = $blocks;
+    }
+
+    /**
+     * Get blocks
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getBlocks()
+    {
+        return $this->blocks;
     }
 }
