@@ -29,5 +29,17 @@ class ButtonController extends Controller {
              
         return array();
     }
+    
+     /**
+     * Displays a form to edit an existing User entity.
+     *
+     * @Route("/new", name="button_new")
+     * @Template()
+     */
+    public function newAction()
+    {
+             
+        return array();
+    }
 
 }
