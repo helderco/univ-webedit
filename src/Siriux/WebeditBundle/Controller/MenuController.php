@@ -21,6 +21,18 @@ class MenuController extends Controller {
     /**
      * Displays a form to edit an existing User entity.
      *
+     * @Route("/new", name="menu_new")
+     * @Template()
+     */
+    public function newAction()
+    {
+             
+        return array();
+    }
+
+    /**
+     * Displays a form to edit an existing User entity.
+     *
      * @Route("/edit", name="menu_edit")
      * @Template()
      */
@@ -29,5 +41,4 @@ class MenuController extends Controller {
              
         return array();
     }
-
 }

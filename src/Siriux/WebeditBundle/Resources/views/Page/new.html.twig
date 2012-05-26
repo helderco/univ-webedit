@@ -2,13 +2,17 @@
 
 {% block body %}
 <h1>New Page</h1>
-<form>
-Page name:<input type="text" name="page_name"><br/>    
-Choose template:
-<input type="radio" name="template" value="t1" /> Template 1
-<input type="radio" name="template" value="t2" /> Template 2
-<input type="radio" name="template" value="t2" /> Template 3
- 
-<input type="submit" name="create">
+<form method="" action="">
+Page title: <input type="text" name="page_title"><br/><br/>    
+Choose template:<br/>
+<table>
+    <tr>
+        <td align="center"><img src="{{ asset('/public/images/temp1.jpg')}}" width="200" height="300"/><br/>Template 1<input type="radio" name="template" value="t1" /></td>
+        <td align="center"><img src="{{ asset('/public/images/temp1.jpg')}}" width="200" height="300"/><br/>Template 2<input type="radio" name="template" value="t1" /></td>
+        <td align="center"><img src="{{ asset('/public/images/temp1.jpg')}}" width="200" height="300"/><br/>Template 3<input type="radio" name="template" value="t1" /></td>
+    </tr>
+    <tr><td><br/></td></tr>
+    <tr><td><input type="submit" value="Create Page"></td></tr>
+</table>
 </form>
 {% endblock %}

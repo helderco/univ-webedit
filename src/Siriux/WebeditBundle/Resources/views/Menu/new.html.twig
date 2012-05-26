@@ -1,0 +1,17 @@
+{% extends '::user.html.twig' %}
+
+{% block body %}
+<h1>Create a Menu</h1>
+<form action="#" method="post" >
+    <table>
+    <tr><td>Menu Name:</td><td><input type="text" name="m_name"></td></tr>
+    <tr><td></td><td><input type="submit" value="Create" /></td></tr>
+    <tr><td></td><td><br/></td></tr>
+    </table>
+</form>
+<br/>
+<table>
+    <tr><td><h4>List of menus</h4></td><td></td></tr>
+    <tr><td>Menu1</td><td> <a href="{{ path('menu_edit') }}">Edit Menu</a></td></tr>
+</table>
+{% endblock %}

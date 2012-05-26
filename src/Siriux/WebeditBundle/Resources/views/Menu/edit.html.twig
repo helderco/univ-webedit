@@ -1,14 +1,12 @@
 {% extends '::user.html.twig' %}
 
 {% block body %}
-<h1>Create a Menu</h1>
-<form action="#" method="post" >
+<h1>Edit the Menu</h1>
     <table>
-    <tr><td>Menu Name:</td><td><input type="text" name="m_name"></td></tr>
-    <tr><td></td><td><input type="submit" value="Create" /></td></td>
+    <tr><td>Menu Name:</td><td> "Menu name"</td></tr>
+    <tr><td></td><td><input type="submit" value="Button 1" /></td><td><a href="{{ path('button_edit') }}">Edit Button</a></td></tr>
+    <tr><td><br/><br/></td></tr>
     </table>
-</form>
-<!-- foreach($button as $value) Listar butoes com edit button -->
-<br/><br/>
-<a href="{{ path('button_new') }}"><input type="submit" Value="Add Button"></a>
+    <hr/><br/><a href="{{ path('button_new') }}"><input type="submit" Value="Add Button"></a>
+
 {% endblock %}
