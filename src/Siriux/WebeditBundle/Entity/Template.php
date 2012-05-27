@@ -20,11 +20,24 @@ class Template
 
     /**
      * @ORM\Column(type="string", length=45)
+     *
+     * @Assert\NotBlank()
+     * @Assert\MaxLength(45)
      */
     private $name;
 
     /**
+     * @ORM\Column(type="text")
+     *
+     * @Assert\NotBlank()
+     */
+    private $body;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\Siriux\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @Assert\NotNull()
      */
     private $user;
 
@@ -76,5 +89,25 @@ class Template
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set body
+     *
+     * @param text $body
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+    }
+
+    /**
+     * Get body
+     *
+     * @return text 
+     */
+    public function getBody()
+    {
+        return $this->body;
     }
 }
