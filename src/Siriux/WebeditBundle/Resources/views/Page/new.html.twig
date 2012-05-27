@@ -1,18 +1,28 @@
 {% extends '::user.html.twig' %}
 
 {% block body %}
-<h1>New Page</h1>
-<form method="" action="">
-Page title: <input type="text" name="page_title"><br/><br/>    
-Choose template:<br/>
-<table>
-    <tr>
-        <td align="center"><img src="{{ asset('/public/images/temp1.jpg')}}" width="200" height="300"/><br/>Template 1<input type="radio" name="template" value="t1" /></td>
-        <td align="center"><img src="{{ asset('/public/images/temp1.jpg')}}" width="200" height="300"/><br/>Template 2<input type="radio" name="template" value="t1" /></td>
-        <td align="center"><img src="{{ asset('/public/images/temp1.jpg')}}" width="200" height="300"/><br/>Template 3<input type="radio" name="template" value="t1" /></td>
-    </tr>
-    <tr><td><br/></td></tr>
-    <tr><td><input type="submit" value="Create Page"></td></tr>
-</table>
-</form>
+<article class="module width_full">
+    <form action="#" method="post">
+        <header><h3>Add new page</h3></header>
+        <div class="module_content">
+            <form method="POST" action="{{ path('create_page') }}">
+                Page title: <input type="text" name="p_title"><br/><br/>    
+                Choose template:<br/>
+                <table width="100%">
+                    <tr>
+                        <td align="center"><img src="{{ asset('/public/images/temp1.jpg')}}" width="250" height="350"/><br/>Template 1<input type="radio" name="template" value="t1" /></td>
+                        <td align="center"><img src="{{ asset('/public/images/temp1.jpg')}}" width="250" height="350"/><br/>Template 2<input type="radio" name="template" value="t1" /></td>
+                        <td align="center"><img src="{{ asset('/public/images/temp1.jpg')}}" width="250" height="350"/><br/>Template 3<input type="radio" name="template" value="t1" /></td>
+                    </tr>
+                    <tr><td><br/></td></tr>
+                </table>
+        </div>
+        <footer>
+            <div class="submit_link">
+                <input type="submit" value="Create" class="alt_btn" />
+                or <a href="{{ path('root') }}">Cancel</a>
+            </div>
+        </footer> 
+    </form>  
+</article>    
 {% endblock %}

@@ -2,16 +2,22 @@
 
 {% block body %}
 <h1>Create a Menu</h1>
-<form action="#" method="post" >
+<form action="{{ path('menu_create') }}" method="post" >
     <table>
-    <tr><td>Menu Name:</td><td><input type="text" name="m_name"></td></tr>
+    <tr><td>Menu title:</td><td><input type="text" name="m_title"></td></tr>
+    <tr><td></td><td><hr/><br/><h4>Menu itens</h4></td></tr>
+    <tr><td></td><td><table><tr><td>Name</td><td>URL</td><td>Weight</td></tr>
+            <tr><td><input type="text" name="item_n1"></td><td><input type="text" name="item_u1"></td><td><input type="text" name="item_w1"></td></tr>
+            <tr><td><input type="text" name="item_n1"></td><td><input type="text" name="item_u1"></td><td><input type="text" name="item_w1"></td></tr>
+<tr><td><input type="text" name="item_n1"></td><td><input type="text" name="item_u1"></td><td><input type="text" name="item_w1"></td></tr></table></td></tr>
     <tr><td></td><td><input type="submit" value="Create" /></td></tr>
     <tr><td></td><td><br/></td></tr>
     </table>
 </form>
-<br/>
-<table>
-    <tr><td><h4>List of menus</h4></td><td></td></tr>
-    <tr><td>Menu1</td><td> <a href="{{ path('menu_edit') }}">Edit Menu</a></td></tr>
-</table>
+<h3>Site</h3>
+    <ul class="toggle">
+        <li><a href="{{ path('menu_edit') }}">Menus</a></li>
+        <li><a href="{{ path('page_edit') }}">Pages</a></li>
+        <li><a href="{{ path('new_page') }}">Add New Page</a></li>
+    </ul>
 {% endblock %}

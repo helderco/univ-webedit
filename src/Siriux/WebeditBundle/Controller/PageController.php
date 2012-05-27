@@ -19,7 +19,7 @@ class PageController extends Controller {
 
     /**
      *
-     * @Route("/edit", name="page_edit")
+     * @Route("/edit", name="edit_page")
      * @Template()
      */
     public function editAction()
@@ -39,5 +39,24 @@ class PageController extends Controller {
         // nova pagina
         
         return array();
+    }
+    
+    /**
+     *
+     * @Route("/create", name="create_page")
+     * @Template()
+     */
+    public function createAction()
+    {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $page = new Page();
+        $page->setTitle($_POST['p_title']);
+        $page->setTemplate(new Template());
+        $page->setUser($user);
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->persist($page);
+        $em->flush();
+        
+        return $this->redirect($this->generateUrl('edit_page'));
     }
 }

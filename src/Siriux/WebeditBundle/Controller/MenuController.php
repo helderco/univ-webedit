@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Siriux\WebeditBundle\Entity\Menu;
 
 
 
@@ -19,15 +20,51 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class MenuController extends Controller {
 
     /**
-     * Displays a form to edit an existing User entity.
+     * Displays a form to create a new Menu entity.
      *
-     * @Route("/new", name="menu_new")
+     * @Route("/{id}/new", name="menu_new")
      * @Template()
      */
     public function newAction()
     {
-             
+          
         return array();
+    }
+    
+    /**
+     * Create a new Menu entity.
+     *
+     * @Route("/create", name="menu_create")
+     * @Template()
+     */
+    public function createAction()
+    {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $menu = new Menu();
+        $menu->setTitle($_POST['m_title']);
+        $menu->setUser($user);
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->persist($menu);
+        $em->flush();
+        
+        return $this->redirect($this->generateUrl('menu_edit'));
+    }
+    
+    /**
+     * Show a Menu entity.
+     *
+     * @Route("/show", name="menu_show")
+     * @Template()
+     */
+    public function showAction()
+    {
+        $menu = $this->getDoctrine()
+                ->getRepository('SiriuxWebeditBundle:Menu');
+        foreach($menu as $value){
+            return $value;
+        }
+        
+        return $menu;
     }
 
     /**
@@ -37,8 +74,33 @@ class MenuController extends Controller {
      * @Template()
      */
     public function editAction()
-    {
-             
-        return array();
+    {   $user = $this->get('security.context')->getToken()->getUser();
+        $repository = $this->getDoctrine()->getRepository('SiriuxWebeditBundle:Menu');
+        $menu = $repository->findBy(array('user'=>$user->getId()));
+        return array('menus'=>$menu);
     }
+    
+    /**
+     * Deletes a menu entity.
+     *
+     * @Route("/{id}/delete", name="menu_delete")
+     * @Template()
+     */
+    public function deleteAction($id)
+    {   $em = $this->getDoctrine()->getEntityManager();
+        $menu = $em->getRepository('SiriuxWebeditBundle:Menu')->find($id);
+        //Remover os items antes de remover o menu ???
+        $em2 = $this->getDoctrine()->getRepository('SiriuxWebeditBundle:MenuItem');
+        $menuItens = $em2->findBy(array('menu'=>$id));
+        foreach($menuItens as $item){
+            $em2->remove($item);
+            $em2->flush();
+        }
+        ////
+        $em->remove($menu);
+        $em->flush();
+        return $this->redirect($this->generateUrl('menu_edit'));
+    }
+    
+    
 }

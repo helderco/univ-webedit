@@ -1,7 +1,23 @@
 {% extends '::user.html.twig' %}
 
 {% block body %}
-<h1> Pages</h1>
-List all pages
-Edit{title, name, content}
+<article class="module width_full">
+    <form action="#" method="post">
+        <header><h3>Edit Pages</h3></header>
+        <div class="module_content">
+            <table>
+                <tr><td>Page Name:</td><td> "Menu name"</td></tr>
+                <tr><td></td><td><input type="submit" value="Button 1" /></td><td><a href="#">Edit Button</a></td></tr>
+                <tr><td><br/><br/></td></tr>
+            </table>
+    </form>
+            <hr/><br/>
+
+            <h3>Create new Menu</h3>
+               <form method="post" action="{{ path('menu_create') }}">
+                    Title: <input type="text" name="m_title"/>
+                    <input type="submit" value="Create"/><br/>
+                </form>      
+        </div>
+</article>    
 {% endblock %}
