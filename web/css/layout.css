@@ -919,3 +919,7 @@ border: none;
 background: none;
 text-indent: 0px;
 margin-left: 3%;}
+
+fieldset .defaultSkin table.mceLayout {
+    margin-left:10px;
+}

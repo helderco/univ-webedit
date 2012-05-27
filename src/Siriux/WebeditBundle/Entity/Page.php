@@ -37,6 +37,7 @@ class Page
 
     /**
      * @ORM\ManyToOne(targetEntity="\Siriux\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
