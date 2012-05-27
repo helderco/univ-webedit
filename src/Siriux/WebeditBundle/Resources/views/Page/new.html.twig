@@ -1,11 +1,14 @@
 {% extends '::user.html.twig' %}
 
+{% block breadcrumb %}
+<a class="current">Add New Page</a>
+{% endblock %}
+
 {% block body %}
 <article class="module width_full">
-    <form action="#" method="post">
         <header><h3>Add new page</h3></header>
+        <form method="post" action="{{ path('create_page') }}">
         <div class="module_content">
-            <form method="POST" action="{{ path('create_page') }}">
                 Page title: <input type="text" name="p_title"><br/><br/>    
                 Choose template:<br/>
                 <table width="100%">
@@ -23,6 +26,6 @@
                 or <a href="{{ path('root') }}">Cancel</a>
             </div>
         </footer> 
-    </form>  
+     </form>
 </article>    
 {% endblock %}

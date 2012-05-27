@@ -18,19 +18,7 @@ use Siriux\WebeditBundle\Entity\Menu;
  * @Route("/menu")
  */
 class MenuController extends Controller {
-
-    /**
-     * Displays a form to create a new Menu entity.
-     *
-     * @Route("/{id}/new", name="menu_new")
-     * @Template()
-     */
-    public function newAction()
-    {
-          
-        return array();
-    }
-    
+  
     /**
      * Create a new Menu entity.
      *
@@ -50,23 +38,7 @@ class MenuController extends Controller {
         return $this->redirect($this->generateUrl('menu_edit'));
     }
     
-    /**
-     * Show a Menu entity.
-     *
-     * @Route("/show", name="menu_show")
-     * @Template()
-     */
-    public function showAction()
-    {
-        $menu = $this->getDoctrine()
-                ->getRepository('SiriuxWebeditBundle:Menu');
-        foreach($menu as $value){
-            return $value;
-        }
-        
-        return $menu;
-    }
-
+    
     /**
      * Displays a form to edit an existing User entity.
      *

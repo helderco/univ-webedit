@@ -1,5 +1,11 @@
 {% extends '::user.html.twig' %}
 
+{% block breadcrumb %}
+<a href="{{ path('menu_edit') }}">Menu</a>
+<div class="breadcrumb_divider"></div>
+<a class="current">Menu Item</a>
+{% endblock %}
+
 {% block body %}   
 
 <article class="module width_full">   

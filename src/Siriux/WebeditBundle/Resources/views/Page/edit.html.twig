@@ -1,23 +1,28 @@
 {% extends '::user.html.twig' %}
 
+
+{% block breadcrumb %}
+<a href="{{ path('list_page') }}">List Pages</a>
+<div class="breadcrumb_divider"></div>
+<a class="current">Edit Page</a>
+{% endblock %}
+
 {% block body %}
 <article class="module width_full">
-    <form action="#" method="post">
-        <header><h3>Edit Pages</h3></header>
-        <div class="module_content">
-            <table>
-                <tr><td>Page Name:</td><td> "Menu name"</td></tr>
-                <tr><td></td><td><input type="submit" value="Button 1" /></td><td><a href="#">Edit Button</a></td></tr>
-                <tr><td><br/><br/></td></tr>
-            </table>
-    </form>
-            <hr/><br/>
-
-            <h3>Create new Menu</h3>
-               <form method="post" action="{{ path('menu_create') }}">
-                    Title: <input type="text" name="m_title"/>
-                    <input type="submit" value="Create"/><br/>
-                </form>      
-        </div>
+    <header><h3>Edit Page</h3></header>
+    <div class="module_content">
+        <h3>Page creator</h3>
+        <ul class="toggle"> 
+            <form action="#" method="post">
+                <table>
+                    <tr><td>Page Title:</td><td> <input type="text" name="p_title"/></td></tr>
+                    <tr><td valign="top">Text Area 1:</td><td><textarea rows="10" cols="80" name="p_text1"></textarea></td></tr>
+                    <tr><td valign="top">Text Area 2:</td><td><textarea rows="10" cols="80" name="p_text2"></textarea></td></tr>
+                    <tr><td>Image:</td> <td><input type="file" name="p_image"/></td></tr>
+                    <tr><td></td><td><input type="submit" value="Create"/></td></tr> 
+                </table>
+            </form>
+        </ul> 
+    </div>
 </article>    
 {% endblock %}
