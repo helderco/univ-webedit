@@ -108,9 +108,11 @@ class PageController extends Controller {
      */
     public function createAction()
     {
+        $template = $this->getRepository('Template')->find($_POST['template']);
         $user = $this->get('security.context')->getToken()->getUser();
         $page = new Page();
         $page->setTitle($_POST['p_title']);
+        $page->setTemplate($template);
         $page->setUser($user);
         $em = $this->getDoctrine()->getEntityManager();
         $em->persist($page);
