@@ -164,8 +164,11 @@ class PageController extends Controller {
         
         $localPath = $this->container->getParameter('templates_dir')."/".$template->getId();
         $zipPublicPath = '/pages/'.$page->getId().'/webedit.zip';
-        $zipPath = realpath($this->container->getParameter('kernel.root_dir').'/../web'.$zipPublicPath);
-        
+
+        $zipPath = realpath($this->container->getParameter('kernel.root_dir').'/../web').$zipPublicPath;
+
+        new LocalAdapter(dirname($zipPath), true);
+
         $adapterLocal = new LocalAdapter($localPath);
         $local = new Filesystem($adapterLocal);
         
