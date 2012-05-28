@@ -5,6 +5,7 @@ imports:
 parameters:
     app_name: "Webedit"
     form_theme: "::form.html.twig"
+    templates_dir: "%kernel.root_dir%/../web/templates"
 
 framework:
     #esi:             ~
@@ -98,7 +99,7 @@ knp_gaufrette:
     adapters:
         templates:
             local:
-                directory: %kernel.root_dir%/../web/templates
+                directory: %templates_dir%
                 create:    true
     filesystems:
         templates:

@@ -923,3 +923,9 @@ margin-left: 3%;}
 fieldset .defaultSkin table.mceLayout {
     margin-left:10px;
 }
+
+article.width_3_quarter fieldset input,
+article.width_3_quarter fieldset textarea
+{
+    width: 93%;
+}

@@ -25,7 +25,7 @@
 
 
 {% block body %}
-<article class="module width_full">
+<article class="module width_3_quarter">
     <header><h3>Edit template</h3></header>
     <div class="module_content">
         <form id="update_form" action="{{ path('template_update', { 'id': template.id }) }}" method="post">
@@ -43,4 +43,9 @@
         </div>
     </footer>
 </article>
+
+{% include 'SiriuxWebeditBundle:Admin/Template:_help.html.twig' %}
+
+{% render  'SiriuxWebeditBundle:Admin\\Template:assets' with {'id': template.id} %}
+
 {% endblock %}

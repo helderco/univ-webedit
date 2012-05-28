@@ -1,0 +1,71 @@
+{% extends 'SiriuxWebeditBundle:Admin/Template:__section.html.twig' %}
+
+{% block subtitle %}Edit asset{% endblock %}
+
+{% block breadcrumb_current %}
+    <a href="{{ path('template_edit', {'id': template.id}) }}">{{ template.name }}</a>
+    <div class="breadcrumb_divider"></div>
+    <a class="current">{{ block('subtitle') }}: {{ asset.key}}</a>
+{% endblock breadcrumb_current %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $(":submit[name=update]").click(function() {
+            $("#update_form").submit();
+        });
+        $('input').keypress(function(e) {
+            if (e.keyCode == 13) {
+                $('#update_form').submit();
+            }
+        });
+        $(":submit[name=delete]").click(function() {
+            if (confirm("You are about to delete an asset.\nIt cannot be restored at a later time! Continue?")) {
+                $("#delete_form").submit();
+            }
+        });
+    });
+    </script>
+{% endblock%}
+
+
+{% block body %}
+<article class="module width_3_quarter">
+    <header><h3>Edit template asset</h3></header>
+    <div class="module_content">
+        <fieldset>
+            <label>Template</label>
+            <div>{{ template.name }}</div>
+        </fieldset>
+        <fieldset>
+            <label>Asset</label>
+            <div>{{ asset.key }}</div>
+        </fieldset>
+
+        {% if image %}
+        <fieldset>
+            <label>Image</label>
+            <p><img src="{{ asset(image['path']) }}" {{ image[3]|raw }} /></p>
+        </fieldset>
+        {% else %}
+        <form id="update_form" action="{{ path('template_asset', { 'id': template.id, 'file': asset.key }) }}" method="post">
+            {{ form_widget(edit_form) }}
+        </form>
+        {% endif %}
+        <form id="delete_form" action="{{ path('template_asset_delete', { 'id': template.id, 'file': asset.key }) }}" method="post">
+            {{ form_widget(delete_form) }}
+        </form>
+    </div>
+    <footer>
+        <div class="submit_link">
+            {% if edit_form %}<input type="submit" name="update" value="Update asset" class="alt_btn" />{% endif %}
+            <input type="submit" name="delete" value="Delete asset" class="delete_btn" />
+            or <a href="{{ path('template_edit', {'id': template.id}) }}">Cancel</a>
+        </div>
+    </footer>
+</article>
+
+{% render 'SiriuxWebeditBundle:Admin\\Template:assets' with {'id': template.id} %}
+
+{% endblock %}

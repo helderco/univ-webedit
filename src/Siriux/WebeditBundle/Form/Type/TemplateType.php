@@ -13,10 +13,8 @@ class TemplateType extends AbstractType
         $builder
             ->add('name')
             ->add('body', 'textarea', array(
-                'attr' => array(
-                    'class' => 'tinymce',
-                    'data-theme' => 'fullpage',
-                )))
+                'attr' => array('rows' => 18),
+                'error_bubbling' => true))
         ;
     }
 

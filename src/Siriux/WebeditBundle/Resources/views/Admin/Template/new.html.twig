@@ -4,7 +4,7 @@
 
 {% block body %}
 <form action="{{ path('template_create') }}" method="post">
-<article class="module width_full">
+<article class="module width_3_quarter">
     <header><h3>Add new template</h3></header>
     <div class="module_content">
             {{ form_widget(form) }}
@@ -17,4 +17,6 @@
     </footer>
 </article>
 </form>
+
+{% include 'SiriuxWebeditBundle:Admin/Template:_help.html.twig' %}
 {% endblock %}

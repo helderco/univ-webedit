@@ -1,0 +1,26 @@
+
+<form action="{{ path('template_upload', {'id': template.id}) }}" method="post" {{ form_enctype(upload_form) }}>
+<article class="module width_quarter">
+    <header><h3>Assets</h3></header>
+        <div class="module_content">
+            <div class="message">
+                <p>Upload any assets needed for your template here. You will be able to edit any text file like css or js afterwards.</p>
+                {{ form_errors(upload_form) }}
+                <p>{{ form_widget(upload_form.asset) }}</p>
+            </div>
+            {% for asset in assets %}
+                <p>&bull;&nbsp; <a href="{{ path('template_asset', {'id': template.id, 'file': asset.key}) }}">{{ asset.key }}</a></p>
+            {% else%}
+            <div style="text-align:center; font-style:italic; margin: 1em auto">
+                No uploaded assets at the moment.
+            </div>
+            {% endfor %}
+    </div>
+    <footer>
+        <div class="submit_link">
+            {{ form_rest(upload_form) }}
+            <input type="submit" value="Upload" />
+        </div>
+    </footer>
+</article>
+</form>

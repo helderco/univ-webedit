@@ -7,5 +7,7 @@
 {% block breadcrumb %}
     <a href="{{ path('templates') }}">{{ block('section') }}</a>
     <div class="breadcrumb_divider"></div>
-    <a class="current">{{ block('subtitle') }}</a>
+    {% block breadcrumb_current %}
+        <a class="current">{{ block('subtitle') }}</a>
+    {% endblock breadcrumb_current %}
 {% endblock %}
