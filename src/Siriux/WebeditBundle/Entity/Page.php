@@ -7,12 +7,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
+ * User page.
+ *
  * @ORM\Entity
  * @ORM\Table(name="pages")
  */
 class Page
 {
     /**
+     * The page id.
+     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -20,32 +24,51 @@ class Page
     private $id;
 
     /**
+     * Administrative title.
+     *
+     * E.g., used in listings of pages to the user.
+     *
      * @ORM\Column(type="string", length=45)
      */
     private $title;
 
     /**
+     * Template to use for layout/design of the page.
+     *
      * @ORM\ManyToOne(targetEntity="Template")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $template;
 
     /**
+     * List of blocks that make the content areas.
+     *
      * @ORM\OneToMany(targetEntity="Block", mappedBy="page")
      */
     private $blocks;
 
+    /**
+     * Menu if available.
+     *
+     * @ORM\ManyToOne(targetEntity="Menu")
+     */
+    private $menu;
 
     /**
+     * The owner or creator of the page.
+     *
      * @ORM\ManyToOne(targetEntity="\Siriux\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->blocks = new ArrayCollection();
     }
-
 
     /**
      * Get id
@@ -135,5 +158,25 @@ class Page
     public function getBlocks()
     {
         return $this->blocks;
+    }
+
+    /**
+     * Set menu
+     *
+     * @param Siriux\WebeditBundle\Entity\Menu $menu
+     */
+    public function setMenu(\Siriux\WebeditBundle\Entity\Menu $menu)
+    {
+        $this->menu = $menu;
+    }
+
+    /**
+     * Get menu
+     *
+     * @return Siriux\WebeditBundle\Entity\Menu 
+     */
+    public function getMenu()
+    {
+        return $this->menu;
     }
 }

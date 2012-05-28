@@ -4,10 +4,13 @@ namespace Siriux\WebeditBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="templates")
+ * @UniqueEntity("name")
  */
 class Template
 {
@@ -19,7 +22,7 @@ class Template
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=45)
+     * @ORM\Column(type="string", length=45, unique=true)
      *
      * @Assert\NotBlank()
      * @Assert\MaxLength(45)
