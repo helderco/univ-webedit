@@ -22,12 +22,12 @@ class MenuItemController extends Controller {
     /**
      * Displays a form to edit an existing User entity.
      *
-     * @Route("/edit", name="item_edit")
+     * @Route("/list", name="item_list")
      * @Template()
      */
-    public function editAction($menu_id)
+    public function listAction($menu_id)
     {   $repository = $this->getDoctrine()->getRepository('SiriuxWebeditBundle:MenuItem');
-        $menu = $repository->findBy(array('menu'=>$menu_id));
+        $menu = $repository->findBy(array('menu'=>$menu_id),array('weight'=>'asc'));
         return array('itens'=>$menu, 'menu_id'=>$menu_id);
     }
     
@@ -51,7 +51,7 @@ class MenuItemController extends Controller {
         $em->persist($menuItem);
         $em->flush();
         
-        return $this->redirect($this->generateUrl('item_edit', array('menu_id'=>$menu_id)));
+        return $this->redirect($this->generateUrl('item_list', array('menu_id'=>$menu_id)));
     }
     
     
@@ -66,7 +66,7 @@ class MenuItemController extends Controller {
         $menuItem = $em->getRepository('SiriuxWebeditBundle:MenuItem')->find($item_id);
         $em->remove($menuItem);
         $em->flush();
-        return $this->redirect($this->generateUrl('item_edit',array('menu_id'=>$menu_id)));
+        return $this->redirect($this->generateUrl('item_list',array('menu_id'=>$menu_id)));
     }
     
     

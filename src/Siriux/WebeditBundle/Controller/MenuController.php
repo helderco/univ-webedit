@@ -59,20 +59,25 @@ class MenuController extends Controller {
      * @Template()
      */
     public function deleteAction($id)
-    {   $em = $this->getDoctrine()->getEntityManager();
-        $menu = $em->getRepository('SiriuxWebeditBundle:Menu')->find($id);
-        //Remover os items antes de remover o menu ???
-        $em2 = $this->getDoctrine()->getRepository('SiriuxWebeditBundle:MenuItem');
-        $menuItens = $em2->findBy(array('menu'=>$id));
+    {   $em = $this->getEm();
+        $menu = $this->getRepository('Menu')->find($id);
+        $menuItens = $this->getRepository('MenuItem')
+                        ->findBy(array('menu'=>$id));
+        
         foreach($menuItens as $item){
-            $em2->remove($item);
-            $em2->flush();
+            $em->remove($item);
         }
-        ////
         $em->remove($menu);
         $em->flush();
         return $this->redirect($this->generateUrl('menu_edit'));
     }
     
-    
+    private function getRepository($entity){
+         return $this->getEm()
+                     ->getRepository('SiriuxWebeditBundle:'.$entity);
+     }
+     private function getEm(){
+         return $this->getDoctrine()
+                     ->getEntityManager();   
+     }
 }

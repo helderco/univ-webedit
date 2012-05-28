@@ -143,11 +143,11 @@ class Page
     /**
      * Add blocks
      *
-     * @param Siriux\WebeditBundle\Entity\Block $blocks
+     * @param Siriux\WebeditBundle\Entity\Block $block
      */
-    public function addBlock(\Siriux\WebeditBundle\Entity\Block $blocks)
+    public function addBlock(\Siriux\WebeditBundle\Entity\Block $block)
     {
-        $this->blocks[] = $blocks;
+        $this->blocks[$block->getName()] = $block;
     }
 
     /**
@@ -159,6 +159,24 @@ class Page
     {
         return $this->blocks;
     }
+    
+     /**
+     * Get block
+     *
+     * @return Siriux\WebeditBundle\Entity\Block
+     */
+    public function getBlock($name)
+    {
+        foreach ($this->blocks as $block) {
+            if ($block->getName() == $name) {
+                return $block;
+            }
+        }
+        $block = new Block();
+        $block->setName($name);
+        return $block;
+    }
+    
 
     /**
      * Set menu

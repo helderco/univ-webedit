@@ -10,15 +10,13 @@
         <form method="post" action="{{ path('create_page') }}">
         <div class="module_content">
                 Page title: <input type="text" name="p_title"><br/><br/>    
-                Choose template:<br/>
-                <table width="100%">
-                    <tr>
-                        <td align="center"><img src="{{ asset('/public/images/temp1.jpg')}}" width="250" height="350"/><br/>Template 1<input type="radio" name="template" value="t1" /></td>
-                        <td align="center"><img src="{{ asset('/public/images/temp1.jpg')}}" width="250" height="350"/><br/>Template 2<input type="radio" name="template" value="t1" /></td>
-                        <td align="center"><img src="{{ asset('/public/images/temp1.jpg')}}" width="250" height="350"/><br/>Template 3<input type="radio" name="template" value="t1" /></td>
-                    </tr>
-                    <tr><td><br/></td></tr>
-                </table>
+                Choose template: 
+                <select name="template">
+                    <option value="0">Choose template</option>
+                    {%for template in templates%}
+                    <option value="{{template.id}}">{{template.name}}</option>
+                    {%endfor%}
+                </select>
         </div>
         <footer>
             <div class="submit_link">
