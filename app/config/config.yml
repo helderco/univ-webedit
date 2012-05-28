@@ -32,6 +32,8 @@ twig:
         resources:
             - '::fields.html.twig'
 
+lk_twigstring: ~
+
 # Assetic Configuration
 assetic:
     debug:          %kernel.debug%

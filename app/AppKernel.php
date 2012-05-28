@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Siriux\WebeditBundle\SiriuxWebeditBundle(),
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
             new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
+            new LK\TwigstringBundle\LKTwigstringBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

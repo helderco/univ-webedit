@@ -18,6 +18,7 @@ $loader->registerNamespaces(array(
     'Stfalcon'         => __DIR__.'/../vendor/bundles',
     'Knp\Bundle'       => __DIR__.'/../vendor/bundles',
     'Gaufrette'        => __DIR__.'/../vendor/gaufrette/src',
+    'LK'               => __DIR__.'/../vendor/bundles',
 ));
 $loader->registerPrefixes(array(
     'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',
