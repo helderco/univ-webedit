@@ -128,10 +128,10 @@ class PageController extends Controller {
     public function previewAction($id)
     {
         $page = $this->getRepository('Page')->find($id);
-        return new Response($this->getPageContent($page));   
+        return new Response($this->getPageContent($page, $id));   
     }
     
-    private function getPageContent(Page $page)
+    private function getPageContent(Page $page, $id)
     {
         $page = $this->getRepository('Page')->find($id);
         $body = $page->getBlock('p_body')->getContent();
@@ -160,6 +160,42 @@ class PageController extends Controller {
     public function downloadAction($id, $contentOnly = false)
     {
         $page = $this->getRepository('Page')->find($id);
+        $template = $page->getTemplate();
+        
+        $localPath = $this->container->getParameter('templates_dir')."/".$template->getId();
+        $zipPublicPath = '/pages/'.$page->getId().'/webedit.zip';
+
+        $zipPath = realpath($this->container->getParameter('kernel.root_dir').'/../web').$zipPublicPath;
+
+        new LocalAdapter(dirname($zipPath), true);
+
+        $adapterLocal = new LocalAdapter($localPath);
+        $local = new Filesystem($adapterLocal);
+        
+        $zipAdapter = new ZipAdapter($zipPath);
+        $zip = new Filesystem($zipAdapter);
+        
+        $zip->write('index.html', $template->getBody());
+        
+        foreach ($local->keys() as $key) {
+            $zip->write($key, $local->read($key));
+        }
+        
+        header('Location: '.$zipPublicPath);
+        exit;
+    }
+    
+    /**
+     * @Route("/{id}/download", name="page_download")
+     */
+    public function downloadAllAction()
+    {
+        
+        $pages = $this->getRepository('Page')->findAll();
+        
+        foreach($pages as $page){
+            $pageId = $page->getId();
+        }
         $template = $page->getTemplate();
         
         $localPath = $this->container->getParameter('templates_dir')."/".$template->getId();

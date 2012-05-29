@@ -304,6 +304,10 @@ background: url(../images/icn_edit_article.png) no-repeat center left;
 #sidebar li.icn_categories a {
 background: url(../images/icn_categories.png) no-repeat center left;
 }
+#sidebar li.icn_download_article a {
+background: url(../images/icn_download_article.png) no-repeat center left;
+}
+
 #sidebar li.icn_tags a {
 background: url(../images/icn_tags.png) no-repeat center left;
 }
