@@ -186,40 +186,26 @@ class PageController extends Controller {
     }
     
     /**
-     * @Route("/{id}/download", name="page_download")
+     * @Route("/{id}/downloadAll", name="page_downloadAll")
      */
-  /*  public function downloadAllAction()
+   public function downloadAllAction()
     {
         
         $pages = $this->getRepository('Page')->findAll();
-        
+        $first = 0; 
         foreach($pages as $page){
             $pageId = $page->getId();
-        }
-        $template = $page->getTemplate();
-        
-        $localPath = $this->container->getParameter('templates_dir')."/".$template->getId();
-        $zipPublicPath = '/pages/'.$page->getId().'/webedit.zip';
-
-        $zipPath = realpath($this->container->getParameter('kernel.root_dir').'/../web').$zipPublicPath;
-
-        new LocalAdapter(dirname($zipPath), true);
-
-        $adapterLocal = new LocalAdapter($localPath);
-        $local = new Filesystem($adapterLocal);
-        
-        $zipAdapter = new ZipAdapter($zipPath);
-        $zip = new Filesystem($zipAdapter);
-        
-        $zip->write('index.html', $template->getBody());
-        
-        foreach ($local->keys() as $key) {
-            $zip->write($key, $local->read($key));
+         if($first>0)
+         {
+          $this->downloadAction($pageId, true);
+          $first++;
+         }
+         else{
+           $this->downloadAction($pageId);
+           }
         }
         
-        header('Location: '.$zipPublicPath);
-        exit;
-    }*/
+    }
     
     /**
      * Deletes a Page entity.
