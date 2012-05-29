@@ -159,11 +159,13 @@ class PageController extends Controller {
      */
     public function downloadAction($id, $contentOnly = false)
     {
+        $user = $this->get('security.context')->getToken()->getUser();
         $page = $this->getRepository('Page')->find($id);
         $template = $page->getTemplate();
         
         $localPath = $this->container->getParameter('templates_dir')."/".$template->getId();
-        $zipPublicPath = '/pages/'.$page->getId().'/webedit.zip';
+       // $zipPublicPath = '/pages/'.$page->getId().'/webedit.zip';
+        $zipPublicPath = '/pages/'.$user->getUsername().'/webedit.zip';
 
         $zipPath = realpath($this->container->getParameter('kernel.root_dir').'/../web').$zipPublicPath;
 
@@ -177,35 +179,30 @@ class PageController extends Controller {
         
         $zip->write($page->getTitle().'.html', $this->getPageContent($page));
         
+        if(!$contentOnly){
         foreach ($local->keys() as $key) {
             $zip->write($key, $local->read($key));
+        }
         }
         
         header('Location: '.$zipPublicPath);
         exit;
     }
     
-    /**
-     * @Route("/{id}/downloadAll", name="page_downloadAll")
+     /**
+     *
+     * @Route("/{id}/downloadPage", name="download_page")
      */
-   public function downloadAllAction()
+    public function downloadPageAction($id)
     {
-        
-        $pages = $this->getRepository('Page')->findAll();
-        $first = 0; 
-        foreach($pages as $page){
-            $pageId = $page->getId();
-         if($first>0)
-         {
-          $this->downloadAction($pageId, true);
-          $first++;
-         }
-         else{
-           $this->downloadAction($pageId);
-           }
-        }
-        
+        $page = $this->getRepository('Page')->find($id);
+        $response = new Response();
+        $response->headers->set('Content-type', 'application/force-download');
+        $response->headers->set('Content-Disposition','attachemnt;', 'filename="index.html"');
+        $response->setContent($this->getPageContent($page, $id));
+        return $response;
     }
+    
     
     /**
      * Deletes a Page entity.

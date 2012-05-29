@@ -11,7 +11,7 @@
             <h3>Page List</h3>   
             <ul class="toggle">    
             {% for page in pages %}
-                    <li>Page title: {{ page.title }} - <a href="{{ path('edit_page', { 'id' : page.id }) }}">Edit</a> - <a href="{{ path('preview_page', { 'id' : page.id }) }}">View</a> - <a href="{{ path('delete_page', { 'id' : page.id }) }}">Delete</a> </li>                
+                    <li>Page title: {{ page.title }} - <a href="{{ path('edit_page', { 'id' : page.id }) }}">Edit</a> - <a href="{{ path('preview_page', { 'id' : page.id }) }}">View</a> - <a href="{{ path('page_download', { 'id' : page.id } )}}">Download Zip</a> - <a href="{{ path('download_page', { 'id' : page.id , 'page_url' : page.title } )}}">Download Page</a> - <a href="{{ path('delete_page', { 'id' : page.id }) }}">Delete</a> </li>                
             {% endfor%}
             </ul>
     </div>

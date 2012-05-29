@@ -99,7 +99,17 @@ class Page
     {
         return $this->title;
     }
-
+    
+    /**
+     * Get filename
+     *
+     * @return string 
+     */
+    public function getFilename()
+    {
+        return $this->getTitle().".html";
+    }
+   
     /**
      * Set template
      *
