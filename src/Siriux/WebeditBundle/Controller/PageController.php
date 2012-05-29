@@ -131,7 +131,7 @@ class PageController extends Controller {
         return new Response($this->getPageContent($page, $id));   
     }
     
-    private function getPageContent(Page $page, $id)
+    private function getPageContent(Page $page)
     {
         $page = $this->getRepository('Page')->find($page->getId());
         $body = $page->getBlock('p_body')->getContent();
@@ -175,7 +175,7 @@ class PageController extends Controller {
         $zipAdapter = new ZipAdapter($zipPath);
         $zip = new Filesystem($zipAdapter);
         
-        $zip->write('index.html', $this->getPageContent($page));
+        $zip->write($page->getTitle().'.html', $this->getPageContent($page));
         
         foreach ($local->keys() as $key) {
             $zip->write($key, $local->read($key));
@@ -188,7 +188,7 @@ class PageController extends Controller {
     /**
      * @Route("/{id}/download", name="page_download")
      */
-    public function downloadAllAction()
+  /*  public function downloadAllAction()
     {
         
         $pages = $this->getRepository('Page')->findAll();
@@ -219,7 +219,7 @@ class PageController extends Controller {
         
         header('Location: '.$zipPublicPath);
         exit;
-    }
+    }*/
     
     /**
      * Deletes a Page entity.
