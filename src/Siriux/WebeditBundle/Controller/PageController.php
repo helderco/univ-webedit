@@ -133,7 +133,7 @@ class PageController extends Controller {
     
     private function getPageContent(Page $page)
     {
-        $page = $this->getRepository('Page')->find($id);
+        $page = $this->getRepository('Page')->find($page->getId());
         $body = $page->getBlock('p_body')->getContent();
         $footer = $page->getBlock('p_footer')->getContent();
         $header_title = $page->getBlock('header_title')->getContent();
@@ -175,7 +175,7 @@ class PageController extends Controller {
         $zipAdapter = new ZipAdapter($zipPath);
         $zip = new Filesystem($zipAdapter);
         
-        $zip->write('index.html', $template->getBody());
+        $zip->write('index.html', $this->getPageContent($page));
         
         foreach ($local->keys() as $key) {
             $zip->write($key, $local->read($key));
