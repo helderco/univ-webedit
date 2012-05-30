@@ -32,7 +32,8 @@ class PageController extends Controller {
     public function editAction($id)
     {
         $page = $this->getRepository('Page')->find($id);
-        $menus = $this->getRepository('Menu')->findAll();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $menus = $this->getRepository('Menu')->findBy(array('user' => $user->getId()));
         return array('menus'=>$menus , 'page'=>$page);
     }
     
