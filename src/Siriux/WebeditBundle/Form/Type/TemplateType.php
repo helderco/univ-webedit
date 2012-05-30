@@ -13,7 +13,7 @@ class TemplateType extends AbstractType
         $builder
             ->add('name')
             ->add('body', 'textarea', array(
-                'attr' => array('rows' => 18),
+                'attr' => array('rows' => 24),
                 'error_bubbling' => true))
         ;
     }
