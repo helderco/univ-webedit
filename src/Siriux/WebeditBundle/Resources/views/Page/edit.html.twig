@@ -12,10 +12,24 @@
 <article class="module width_full">
     <header><h3>Edit Page</h3></header>
     <div class="module_content">
+        
         <fieldset>
             <label>Page Title</label>
             <input type="text" name="p_title" value="{{ page.block('p_title').content }}"/>
         </fieldset>
+        <fieldset>
+            <label>Filename</label>
+            <input type="text" name="p_filename" value="{{ page.name }}"/>
+        </fieldset>
+        <fieldset>
+            <label>Page Template</label>
+            <select name="p_template">
+                    <option value="0">{{ page.template.name }}</option>
+                    {%for template in templates%}
+                    <option value="{{template.id}}">{{template.name}}</option>
+                    {%endfor%}
+                </select>
+        </fieldset>    
         <fieldset>
             <label>Header Image</label>
             <input type="file" name="header_img"/>

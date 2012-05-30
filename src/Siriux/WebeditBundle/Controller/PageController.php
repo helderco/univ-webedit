@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template as Twig;
+
 use Siriux\WebeditBundle\Entity\Page;
 use Siriux\WebeditBundle\Entity\Template;
 use Siriux\WebeditBundle\Entity\Block;
@@ -30,10 +31,11 @@ class PageController extends Controller {
      * @Twig()
      */
     public function editAction($id)
-    {
+    {       
         $page = $this->getRepository('Page')->find($id);
         $menus = $this->getRepository('Menu')->findAll();
-        return array('menus'=>$menus , 'page'=>$page);
+        $templates = $this->getRepository('Template')->findAll();
+        return array('menus'=>$menus , 'page'=>$page, 'templates'=>$templates);
     }
     
     
@@ -52,6 +54,16 @@ class PageController extends Controller {
         $title->setContent($_POST['p_title']);
         $title->setPage($page);
         $em->persist($title);
+        
+        $page->setName($_POST['p_filename']);
+        $em->persist($page);
+        
+        if(!empty($_POST['p_template']))
+        {
+        $template = $this->getRepository('Template')->find($_POST['p_template']);
+        $page->setTemplate($template);
+        $em->persist($page);
+        }
         
         $body = $page->getBlock('p_body');
         $body->setType(Block::TYPE_TEXT);

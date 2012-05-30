@@ -88,7 +88,8 @@ class Page
     {
         return $this->getName().'.'.$ext;
     }
-
+    
+     
     public function getPath($base_dir = 'pages')
     {
         return sprintf('/%s/user-%d/page-%d', $base_dir, $this->user->getId(), $this->id);
