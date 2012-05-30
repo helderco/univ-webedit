@@ -40,11 +40,11 @@
                         <td>{{ template.name }}</td>
                         <td><a href="{{ path('users_edit', { 'id': template.user.id }) }}" title="Edit user">{{ template.user.username }}</a></td>
                         <td style="text-align:center">
-                            <a href="{{ path('template_edit', { 'id': template.id }) }}" title="Edit template"><img src="{{ asset('bundles/siriuxadmin/images/icn_edit.png') }}" alt="edit" /></a>
+                            <a href="{{ path('template_edit', { 'id': template.id }) }}" title="Edit template"><img src="{{ asset('images/icn_edit.png') }}" alt="edit" /></a>
                             <form action="{{ path("template_delete", {'id': template.id}) }}" method="post" class="trash_template" style="display:inline;">
                                 {{ form_widget(delete_forms[template.id]._token) }}
                                 {{ form_widget(delete_forms[template.id].id) }}
-                                <input type="image" src="{{ asset('bundles/siriuxadmin/images/icn_trash.png') }}" class="trash_template" title="Delete template" />
+                                <input type="image" src="{{ asset('images/icn_trash.png') }}" class="trash_template" title="Delete template" />
                             </form>
                         </td>
                     </tr>
