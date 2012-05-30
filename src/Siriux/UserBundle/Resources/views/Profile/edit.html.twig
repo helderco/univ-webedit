@@ -2,6 +2,8 @@
 
 {% block subtitle %}{{ 'layout.profile'|trans }}{% endblock %}
 
+{% form_theme form '::form.html.twig' %}
+
 {% block body %}
 <article class="module width_full">
     <form id="user_update_form" action="{{ path('fos_user_profile_edit') }}" method="post">
