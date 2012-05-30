@@ -33,6 +33,7 @@ class PageController extends Controller {
     public function editAction($id)
     {       
         $page = $this->getRepository('Page')->find($id);
+
         $menus = $this->getRepository('Menu')->findAll();
         $templates = $this->getRepository('Template')->findAll();
         return array('menus'=>$menus , 'page'=>$page, 'templates'=>$templates);
