@@ -22,7 +22,7 @@ class MenuItem
 
     /**
      * @ORM\ManyToOne(targetEntity="Menu", inversedBy="items")
-     * @ORM\JoinColumn(name="menu_id", referencedColumnName="id")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $menu;
 
