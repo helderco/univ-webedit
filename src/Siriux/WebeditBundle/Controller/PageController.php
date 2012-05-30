@@ -42,14 +42,14 @@ class PageController extends Controller {
      * @Route("/{id}/update", name="update_page")
      * @Twig()
      */
-    public function updateAction($id){
+    public function updateAction($id)
+    {
         $em = $this->getEm();
-                       
-        $page = $this->getRepository('Page')->find($id);
+        $page = $this->getPage($id);
         
-        $title = $page->getBlock('header_title');
+        $title = $page->getBlock('p_title');
         $title->setType(Block::TYPE_STRING);
-        $title->setContent($_POST['header_title']);
+        $title->setContent($_POST['p_title']);
         $title->setPage($page);
         $em->persist($title);
         
@@ -108,12 +108,17 @@ class PageController extends Controller {
      */
     public function createAction()
     {
+        if (empty($_POST['template']) || empty($_POST['p_name'])) {
+            $this->get('session')->setFlash('error', 'All fields are required.');
+            return $this->redirect($this->generateUrl('new_page'));
+        }
+
         $template = $this->getRepository('Template')->find($_POST['template']);
         $user = $this->get('security.context')->getToken()->getUser();
-        $page = new Page();
-        $page->setTitle($_POST['p_title']);
+        $page = new Page($_POST['p_name']);
         $page->setTemplate($template);
         $page->setUser($user);
+
         $em = $this->getDoctrine()->getEntityManager();
         $em->persist($page);
         $em->flush();
@@ -127,25 +132,30 @@ class PageController extends Controller {
      */
     public function previewAction($id)
     {
-        $page = $this->getRepository('Page')->find($id);
-        return new Response($this->getPageContent($page, $id));   
+        return new Response($this->getPageContent($id));
     }
     
-    private function getPageContent(Page $page)
+    private function getPageContent($page)
     {
-        $page = $this->getRepository('Page')->find($page->getId());
+        if (is_numeric($page)) {
+            $page = $this->getPage($page);
+        }
+
+        $title = $page->getBlock('p_title')->getContent();
         $body = $page->getBlock('p_body')->getContent();
         $footer = $page->getBlock('p_footer')->getContent();
-        $header_title = $page->getBlock('header_title')->getContent();
-        
-        $menu = $this->renderMenuAction($page->getMenu()->getId());
+
+        $menu = '';
+        if ($page->getMenu()) {
+            $menu = $this->renderMenuAction($page->getMenu()->getId());
+        }
 
         $params = array(
             'base_dir' => "/templates/".$page->getTemplate()->getId(),
             'page' => $page,
             'body'=>$body, 
             'menu'=> $menu,
-            'title'=> $header_title,
+            'title'=> $title,
             'footer' => $footer,
         );
 
@@ -155,52 +165,63 @@ class PageController extends Controller {
     }
     
     /**
-     * @Route("/{id}/download", name="page_download")
+     * @Route("/{id}/download.zip", name="download_page_zip")
      */
-    public function downloadAction($id, $contentOnly = false)
+    public function downloadZipAction($id)
     {
-        $user = $this->get('security.context')->getToken()->getUser();
-        $page = $this->getRepository('Page')->find($id);
-        $template = $page->getTemplate();
-        
-        $localPath = $this->container->getParameter('templates_dir')."/".$template->getId();
-       // $zipPublicPath = '/pages/'.$page->getId().'/webedit.zip';
-        $zipPublicPath = '/pages/'.$user->getUsername().'/webedit.zip';
+        $page = $this->getPage($id);
 
-        $zipPath = realpath($this->container->getParameter('kernel.root_dir').'/../web').$zipPublicPath;
+        // setup dirs and paths (path is for the URL and dir is for the filesystem)
+        $templatesDir = $this->container->getParameter('templates_dir');
+        $templateDir = $templatesDir.'/'.$page->getTemplate()->getId();
 
-        new LocalAdapter(dirname($zipPath), true);
+        $zipFile = $page->getFilename('zip');     // the name of the zip file
+        $zipPath = $page->getPath().'/'.$zipFile; // the path to the zip file (URL)
+        $pageDir = $this->getPageDir($page);      // the absolute zip file directory (filesystem)
+        $zipDir = $pageDir.'/'.$zipFile;          // the absolute zip file location (filesystem)
 
-        $adapterLocal = new LocalAdapter($localPath);
-        $local = new Filesystem($adapterLocal);
-        
-        $zipAdapter = new ZipAdapter($zipPath);
+        // create page dir if doesn't exist and delete zip file if previously created
+        $adapterPage = new LocalAdapter($pageDir, true);
+        if ($adapterPage->exists($zipFile)) {
+            $adapterPage->delete($zipFile);
+        }
+
+        // get the template's files
+        $adapterTemplate = new LocalAdapter($templateDir);
+        $template = new Filesystem($adapterTemplate);
+
+        // setup a zip container
+        $zipAdapter = new ZipAdapter($zipDir);
         $zip = new Filesystem($zipAdapter);
-        
-        $zip->write($page->getTitle().'.html', $this->getPageContent($page));
-        
-        if(!$contentOnly){
-        foreach ($local->keys() as $key) {
-            $zip->write($key, $local->read($key));
+
+        // write files to zip
+        $zip->write($page->getFilename(), $this->getPageContent($page));
+        foreach ($template->keys() as $key) {
+            $zip->write($key, $template->read($key));
         }
-        }
-        
-        header('Location: '.$zipPublicPath);
-        exit;
+
+        return $this->redirect($zipPath);
     }
     
      /**
      *
-     * @Route("/{id}/downloadPage", name="download_page")
+     * @Route("/{id}/download", name="download_page")
      */
-    public function downloadPageAction($id)
+    public function downloadAction($id)
     {
-        $page = $this->getRepository('Page')->find($id);
-        $response = new Response();
-        $response->headers->set('Content-type', 'application/force-download');
-        $response->headers->set('Content-Disposition','attachemnt;', 'filename="index.html"');
-        $response->setContent($this->getPageContent($page, $id));
-        return $response;
+        $page = $this->getPage($id);
+
+        // like preview but force download
+        return new Response(
+            $this->getPageContent($page, $id),
+            200,
+            array(
+                'Content-type' => 'application/force-download',
+                'Content-Disposition' => sprintf(
+                        'attachment; filename="%s"', $page->getFilename()
+                )
+            )
+        );
     }
     
     
@@ -211,34 +232,83 @@ class PageController extends Controller {
      * @Twig()
      */
     public function deleteAction($id)
-    {   $em = $this->getDoctrine()->getEntityManager();
-        $page = $em->getRepository('SiriuxWebeditBundle:Page')->find($id);
-        $em->remove($page);
-        $em->flush();
+    {
+        $page = $this->getPage($id);
+        $name = $page->getFilename();
+
+        foreach ($page->getBlocks() as $block) {
+            $this->getEm()->remove($block);
+        }
+
+        $this->deleteDir($page);
+        
+        $this->getEm()->remove($page);
+        $this->getEm()->flush();
+
+        $this->get('session')->setFlash(
+                'success', "Page '$name' deleted successfully.");
+
         return $this->redirect($this->generateUrl('list_page'));
     }
     
-    private function getRepository($entity){
+    private function getRepository($entity)
+    {
          return $this->getEm()
                      ->getRepository('SiriuxWebeditBundle:'.$entity);
-     }
-     private function getEm(){
+    }
+    
+    private function getEm()
+    {
          return $this->getDoctrine()
                      ->getEntityManager();   
-     }
+    }
+
+    private function getPage($id)
+    {
+        return $this->getRepository('Page')->find($id);
+    }
      
     /**
      * Renders a menu into a string.
      */
-     public function renderMenuAction($id, $class = null)
-     {
-         return $this->render('SiriuxWebeditBundle:Page:renderMenu.html.twig', array(
-             'items'=>$this->getRepository('MenuItem')->findBy(
-                     array('menu'=>$id),
-                     array('weight'=>'asc')),
-             'class' => $class
+    public function renderMenuAction($id, $class = null)
+    {
+        return $this->render('SiriuxWebeditBundle:Page:renderMenu.html.twig', array(
+                'items'=>$this->getRepository('MenuItem')->findBy(
+                    array('menu'=>$id),
+                    array('weight'=>'asc')),
+                'class' => $class
             ))->getContent();
-     }
+    }
+
+    private function getPageDir(Page $page)
+    {
+        return realpath($this->container->getParameter('kernel.root_dir').'/../web').$page->getPath();
+    }
      
-     
+    /**
+     * Recursively delete a directory.
+     *
+     * @param Page
+     */
+    private function deleteDir(Page $page)
+    {
+        $dir = $this->getPageDir($page);
+
+        if (is_dir($dir)) {
+            $it = new \RecursiveDirectoryIterator($dir);
+            $files = new \RecursiveIteratorIterator($it,
+                        \RecursiveIteratorIterator::CHILD_FIRST);
+
+            foreach($files as $file) {
+                if ($file->isDir()) {
+                    rmdir($file->getRealPath());
+                } else {
+                    unlink($file->getRealPath());
+                }
+            }
+
+            rmdir($dir);
+        }
+    }
 }

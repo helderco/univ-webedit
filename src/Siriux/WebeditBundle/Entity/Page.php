@@ -24,13 +24,11 @@ class Page
     private $id;
 
     /**
-     * Administrative title.
-     *
-     * E.g., used in listings of pages to the user.
+     * The page name, as used in a filename (without the extension).
      *
      * @ORM\Column(type="string", length=45)
      */
-    private $title;
+    private $name;
 
     /**
      * Template to use for layout/design of the page.
@@ -65,8 +63,9 @@ class Page
     /**
      * Constructor.
      */
-    public function __construct()
+    public function __construct($name = null)
     {
+        $this->name = $name;
         $this->blocks = new ArrayCollection();
     }
 
@@ -79,35 +78,20 @@ class Page
     {
         return $this->id;
     }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string 
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
     
     /**
      * Get filename
      *
      * @return string 
      */
-    public function getFilename()
+    public function getFilename($ext = 'html')
     {
-        return $this->getTitle().".html";
+        return $this->getName().'.'.$ext;
+    }
+
+    public function getPath($base_dir = 'pages')
+    {
+        return sprintf('/%s/user-%d/page-%d', $base_dir, $this->user->getId(), $this->id);
     }
    
     /**
@@ -206,5 +190,25 @@ class Page
     public function getMenu()
     {
         return $this->menu;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

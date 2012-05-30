@@ -1,17 +1,16 @@
 {% extends '::user.html.twig' %}
 
 {% block breadcrumb %}
-<a class="current">List Pages</a>
+<a class="current">Pages List</a>
 {% endblock %}
 
 {% block body %}
 <article class="module width_full">
-        <header><h3>List Pages</h3></header>
+        <header><h3>Pages List</h3></header>
         <div class="module_content">
-            <h3>Page List</h3>   
-            <ul class="toggle">    
+            <ul>    
             {% for page in pages %}
-                    <li>Page title: {{ page.title }} - <a href="{{ path('edit_page', { 'id' : page.id }) }}">Edit</a> - <a href="{{ path('preview_page', { 'id' : page.id }) }}">View</a> - <a href="{{ path('page_download', { 'id' : page.id } )}}">Download Zip</a> - <a href="{{ path('download_page', { 'id' : page.id , 'page_url' : page.title } )}}">Download Page</a> - <a href="{{ path('delete_page', { 'id' : page.id }) }}">Delete</a> </li>                
+                    <li>{{ page.filename }} - <a href="{{ path('edit_page', { 'id' : page.id }) }}">Edit</a> - <a href="{{ path('preview_page', { 'id' : page.id }) }}" target="_blank">View</a> - <a href="{{ path('download_page_zip', { 'id' : page.id } )}}">Download Zip</a> - <a href="{{ path('download_page', { 'id' : page.id } )}}">Download Page</a> - <a href="{{ path('delete_page', { 'id' : page.id }) }}">Delete</a> </li>
             {% endfor%}
             </ul>
     </div>

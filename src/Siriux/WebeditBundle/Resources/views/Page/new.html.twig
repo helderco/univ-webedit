@@ -9,7 +9,7 @@
         <header><h3>Add new page</h3></header>
         <form method="post" action="{{ path('create_page') }}">
         <div class="module_content">
-                Page title: <input type="text" name="p_title"><br/><br/>    
+                Page: <input type="text" size="12" name="p_name">.html<br/><br/>
                 Choose template: 
                 <select name="template">
                     <option value="0">Choose template</option>
@@ -21,7 +21,7 @@
         <footer>
             <div class="submit_link">
                 <input type="submit" value="Create" class="alt_btn" />
-                or <a href="{{ path('root') }}">Cancel</a>
+                or <a href="{{ path('list_page') }}">Cancel</a>
             </div>
         </footer> 
      </form>
